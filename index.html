@@ -3,42 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alumni Gallery</title>
+  <title>Alumni</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎓 Alumni Gallery</h1>
-  <div id="gallery" class="gallery"></div>
-
-  <script>
-    const gallery = document.getElementById("gallery");
-
-    // Load JSON with photo lists
-    fetch("photos.json")
-      .then(res => res.json())
-      .then(data => {
-        for (const [folder, files] of Object.entries(data)) {
-          // Section title
-          const title = document.createElement("div");
-          title.className = "batch-title";
-          title.textContent = folder;
-          gallery.appendChild(title);
-
-          // Photos
-          files.forEach(file => {
-            const card = document.createElement("div");
-            card.className = "card";
-
-            const img = document.createElement("img");
-            img.src = `assets/${folder}/${file}`;
-            img.alt = file;
-
-            card.appendChild(img);
-            gallery.appendChild(card);
-          });
-        }
-      })
-      .catch(err => console.error("Error loading photos.json", err));
-  </script>
+  <main>
+    <h1>Alumni Gallery 2025</h1>
+    <div id="gallery" class="gallery"></div>
+  </main>
+  <script src="gallery.js"></script>
 </body>
 </html>
