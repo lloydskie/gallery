@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alumni Gallery</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f3f3f3; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+    .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .card:hover { transform: scale(1.05); }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .batch-title { grid-column: 1 / -1; font-weight: bold; font-size: 1.2em; margin: 20px 0 10px; }
+  </style>
+</head>
+<body>
+  <h1>🎓 Alumni Gallery</h1>
+  <div id="gallery" class="gallery"></div>
+
+  <script>
+    const gallery = document.getElementById("gallery");
+
+    // Load JSON with photo lists
+    fetch("photos.json")
+      .then(res => res.json())
+      .then(data => {
+        for (const [folder, files] of Object.entries(data)) {
+          // Section title
+          const title = document.createElement("div");
+          title.className = "batch-title";
+          title.textContent = folder;
+          gallery.appendChild(title);
+
+          // Photos
+          files.forEach(file => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const img = document.createElement("img");
+            img.src = `assets/${folder}/${file}`;
+            img.alt = file;
+
+            card.appendChild(img);
+            gallery.appendChild(card);
+          });
+        }
+      })
+      .catch(err => console.error("Error loading photos.json", err));
+  </script>
+</body>
+</html>
