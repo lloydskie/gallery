@@ -3,19 +3,67 @@
   window.onload = () => {
     const gallery = document.querySelector("#gallery");
     const time = 10000;
-    function animStart() {
-      if (!gallery.classList.contains("active")) {
-        gallery.classList.add("active");
-        setTimeout(animEnd, time);
+    // Physics for each photo
+    let figures = [];
+    let swingStates = [];
+  const damping = 0.96;
+  const spring = 0.04;
+  const maxSwing = 6;
+
+    function setupFigures() {
+      figures = Array.from(document.querySelectorAll('#gallery figure'));
+      swingStates = figures.map(() => ({ angle: 0, velocity: 0 }));
+    }
+
+    function animateSwing() {
+      let stillSwinging = false;
+      figures.forEach((fig, i) => {
+        let state = swingStates[i];
+  state.angle += state.velocity * 0.6;
+  state.velocity *= damping;
+  state.velocity -= state.angle * spring;
+        // Clamp angle
+        state.angle = Math.max(-maxSwing, Math.min(maxSwing, state.angle));
+        fig.style.transform = `rotate(${state.angle}deg)`;
+  if (Math.abs(state.angle) > 0.01 || Math.abs(state.velocity) > 0.01) {
+          stillSwinging = true;
+        }
+      });
+      if (stillSwinging) {
+        requestAnimationFrame(animateSwing);
       }
     }
-    function animEnd() {
-      gallery.classList.remove("active");
-      gallery.offsetWidth;
-    }
-    document.addEventListener("scroll", animStart);
-    window.addEventListener("resize", animStart);
-    animStart();
+
+    // Scroll triggers swing for all, each with random velocity
+    document.addEventListener('scroll', () => {
+      if (!figures.length) return;
+      figures.forEach((fig, i) => {
+        // Some randomness, some similarity
+        const base = Math.random() * 0.7 + 0.3;
+        swingStates[i].velocity += ((Math.random() > 0.5 ? 1 : -1) * base * 2);
+      });
+      animateSwing();
+    });
+
+    // Mouse movement triggers swing for nearest photo only
+    document.addEventListener('mousemove', e => {
+      if (!figures.length) return;
+      let minDist = Infinity, nearestIdx = -1;
+      figures.forEach((fig, i) => {
+        const rect = fig.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(cx - e.clientX, cy - e.clientY);
+        if (dist < minDist) {
+          minDist = dist;
+          nearestIdx = i;
+        }
+      });
+      if (nearestIdx !== -1) {
+        swingStates[nearestIdx].velocity += (Math.random() - 0.5) * 2;
+        animateSwing();
+      }
+    });
 
     // Load JSON with photo lists
     fetch("photos.json")
@@ -38,6 +86,7 @@
             gallery.appendChild(figure);
           });
         }
+        setupFigures();
       })
       .catch(err => console.error("Error loading photos.json", err));
   };

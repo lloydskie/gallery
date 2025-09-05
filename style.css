@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 :root {
 	--adjust-size: 0px;
 }
@@ -6,6 +6,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Kalam', cursive;
 }
 html, body {
 	overscroll-behavior-x: none;
@@ -13,7 +14,6 @@ html, body {
 	scroll-behavior: smooth;
 }
 body {
-	font-family: "Kalam", sans-serif;
 	min-height: 100vh;
 	background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTMyOTE2OTh8&ixlib=rb-4.0.3&q=100&w=3000') center/cover no-repeat;
 }
@@ -49,6 +49,7 @@ main {
 	background-blend-mode: multiply;
 	text-align: center;
 	overflow: hidden;
+	transition: transform 500ms cubic-bezier(0.42, 0, 0.58, 1);
 }
 #gallery figure:after {
 	position: absolute;
