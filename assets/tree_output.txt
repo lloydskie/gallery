@@ -1,0 +1,25 @@
+C:\xampp\htdocs\gallery\assets
+├── DAY
+│   ├── DAY 1-20250729T114643Z-1-001
+│   │   └── DAY 1
+│   │       ├── 5R CAP
+│   │       ├── 5R CASUAL
+│   │       ├── 5R FIL
+│   │       ├── 5R NO CAP
+│   │       ├── 8x11 cap
+│   │       ├── CROP CAP
+│   │       ├── CROP CASUAL
+│   │       ├── CROP FIL
+│   │       └── CROP NO CAP
+│   ├── DAY 1-20250729T114643Z-1-002
+│   │   └── DAY 1
+│   │       ├── 8X11 FIL
+│   │       └── 8x11 cap
+├── DAY 1
+│   ├── DAY 1
+│   │   ├── NAME
+│   │   ├── NO CAP
+│   │   └── SOFT COPY
+├── DAY 2
+├── DAY 3
+├── DAY 4
