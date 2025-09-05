@@ -13,6 +13,33 @@
     function setupFigures() {
       figures = Array.from(document.querySelectorAll('#gallery figure'));
       swingStates = figures.map(() => ({ angle: 0, velocity: 0 }));
+
+      // Modal logic
+      const modal = document.getElementById('imgModal');
+      const modalImg = document.getElementById('modalImg');
+      const caption = document.getElementById('caption');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const closeBtn = modal.querySelector('.close');
+
+      figures.forEach(fig => {
+        const img = fig.querySelector('img');
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => {
+          modal.style.display = 'block';
+          modalImg.src = img.src;
+          caption.textContent = img.alt;
+          downloadBtn.href = img.src;
+          downloadBtn.setAttribute('download', img.alt);
+        });
+      });
+      closeBtn.onclick = function() {
+        modal.style.display = 'none';
+      };
+      window.onclick = function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      };
     }
 
     function animateSwing() {
